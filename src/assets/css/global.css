@@ -2,7 +2,10 @@ html,body,#app{
     height: 100%;
     margin: 0;
     padding: 0;
-
+    user-select: none;
+}
+body{
+  min-width: 1000px;  
 }
 
 input:-webkit-autofill , textarea:-webkit-autofill, select:-webkit-autofill {
@@ -15,4 +18,9 @@ input:-webkit-autofill , textarea:-webkit-autofill, select:-webkit-autofill {
 
 input {
     background-color:transparent;
+}
+
+.el-breadcrumb{
+    margin-bottom: 15px;
+    font-size: 12px;
 }
