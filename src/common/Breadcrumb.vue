@@ -5,6 +5,7 @@
       <el-breadcrumb-item :to="{ path: '/home' }">{{insertuser.name}}</el-breadcrumb-item>
       <el-breadcrumb-item>{{insertuser.name1}}</el-breadcrumb-item>
       <el-breadcrumb-item>{{insertuser.name2}}</el-breadcrumb-item>
+      <slot></slot>
     </el-breadcrumb>
   </div>
 </template>
