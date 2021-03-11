@@ -7,7 +7,7 @@ html,body,#app{
 body{
   min-width: 1000px;  
 }
-
+.el-cascader-panel{   height: 300px; }
 input:-webkit-autofill , textarea:-webkit-autofill, select:-webkit-autofill {
 	-webkit-text-fill-color: #ededed !important;
 	box-shadow: 0 0 0px 1000px transparent  inset !important;
