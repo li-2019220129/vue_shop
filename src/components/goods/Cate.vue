@@ -112,7 +112,7 @@
         ref="setaddCateFormRef"
         label-width="100px"
       >
-        <el-form-item label="分类名称：" prop="cat_name">
+        <el-form-item label="分类名称发：" prop="cat_name">
           <el-input v-model="setaddCateForm.cat_name"></el-input>
         </el-form-item>
       </el-form>
@@ -233,7 +233,7 @@ export default {
       } else {
         let { data: res } = await this.$http.delete('categories/' + id)
         if (res.meta.status != 200) {
-          this.$message.error('删除分类失败!')
+         return this.$message.error('删除分类失败!')
         }
         this.$message.success('删除分类成功!')
         console.log(this.querInfo.pagenum)
