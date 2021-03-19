@@ -7,6 +7,15 @@ html,body,#app{
 body{
   min-width: 1000px;  
 }
+.ql-editor{
+  min-height: 300px;
+}
+.el-steps{
+    margin: 15px 0;
+  } 
+  .el-step__title{
+    font-size: 13px;
+  }
 .el-cascader-panel{   height: 300px; }
 input:-webkit-autofill , textarea:-webkit-autofill, select:-webkit-autofill {
 	-webkit-text-fill-color: #ededed !important;
