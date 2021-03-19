@@ -18,7 +18,9 @@
             ></el-button> </el-input
         ></el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="goAddpage">添加商品</el-button></el-col
+          <el-button type="primary" @click="goAddpage"
+            >添加商品</el-button
+          ></el-col
         >
       </el-row>
       <el-table :data="goodsList" border script>
@@ -35,7 +37,11 @@
         </el-table-column>
         <el-table-column label="操作">
           <template v-slot="scope">
-            <el-button type="primary" icon="el-icon-edit" size="mini"
+            <el-button
+              type="primary"
+              icon="el-icon-edit"
+              size="mini"
+              @click="editClick(scope.row)"
               >编辑</el-button
             >
             <el-button
@@ -61,6 +67,37 @@
       >
       </el-pagination>
     </el-card>
+    <el-dialog
+      title="编辑角色"
+      :visible.sync="editDialogVisible"
+      width="50%"
+      @close="editDialogClose"
+    >
+      <el-form
+        :model="editForm"
+        :rules="editRules"
+        ref="editRef"
+        label-width="80px"
+        @click="editDialogClose"
+      >
+        <el-form-item label="商品名称" prop="goods_name">
+          <el-input v-model="editForm.goods_name"></el-input>
+        </el-form-item>
+        <el-form-item label="商品价格" prop="goods_price">
+          <el-input v-model="editForm.goods_price" type="number"></el-input>
+        </el-form-item>
+        <el-form-item label="商品数量" prop="goods_number">
+          <el-input v-model="editForm.goods_number" type="number"></el-input>
+        </el-form-item>
+        <el-form-item label="商品重量" prop="goods_weight">
+          <el-input v-model="editForm.goods_weight" type="number"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="editDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editUserInfo">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -74,6 +111,41 @@ export default {
         name: '首页',
         name1: '商品管理',
         name2: '商品列表'
+      },
+      editDialogVisible: false,
+      editForm: {},
+      editRules: {
+        goods_name: [
+          {
+            required: true,
+            message: '请输入商品名称',
+            tigger: 'blur'
+          }
+        ],
+        goods_price: [
+          {
+            required: true,
+            message: '请输入商品价格',
+            tigger: 'blur',
+            type: 'number'
+          }
+        ],
+        goods_number: [
+          {
+            required: true,
+            message: '请输入商品数量',
+            tigger: 'blur',
+            type: 'number'
+          }
+        ],
+        goods_weight: [
+          {
+            required: true,
+            message: '请输入商品重量',
+            tigger: 'blur',
+            type:'number'
+          }
+        ]
       },
       queryInfo: {
         query: '',
@@ -90,8 +162,37 @@ export default {
     this.getGoodsList()
   },
   methods: {
-    goAddpage(){
-       this.$router.push('/goods/add')
+    editUserInfo() {
+      this.$refs.editRef.validate(async data => {
+        if (!data) return
+        let { data: res } = await this.$http.put(
+          'goods/' + this.editForm.goods_id,this.editForm
+        )
+        console.log(res)
+        if (res.meta.status != 201) {
+          return this.$message.error('更新商品信息失败')
+        }
+        //关闭对话框
+        this.editDialogVisible = false
+        this.editForm = {}
+        //更新数据列表
+        this.getGoodsList()
+        //提示修改成功
+        this.$message.success('更新商品信息成功!')
+      })
+    },
+    //关闭对话框清除验证规则
+    editDialogClose() {
+      this.$refs.editRef.resetFields()
+    },
+    //编辑按钮
+    async editClick(row) {
+      this.editForm = row
+      console.log(this.editForm)
+      this.editDialogVisible = true
+    },
+    goAddpage() {
+      this.$router.push('/goods/add')
     },
     async removeById(id) {
       let confirmres = await this.$confirm(
@@ -153,6 +254,7 @@ export default {
         return this.$message.error('获取商品列表失败')
       }
       this.goodsList = res.data.goods
+      console.log(this.goodsList)
       this.total = res.data.total
     }
   },

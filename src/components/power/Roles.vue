@@ -375,6 +375,7 @@ export default {
         }
         //关闭对话框
         this.editDialogVisible = false
+        this.editForm={}
         //更新数据列表
         this.getRolesList()
         //提示修改成功
