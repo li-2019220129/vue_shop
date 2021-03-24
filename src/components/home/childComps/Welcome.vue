@@ -1,6 +1,6 @@
 <template>
   <div class="welcome">
-     <img src="~assets/img/5.jpg" alt="">
+     <img src="~assets/img/6.png" alt="">
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
 <style lang="less" scoped>
 .welcome{
   width: 100%;
-  height: 478px;
+  height: 510px;
   img{
     width: 100%;
     height: 100%;
